@@ -103,4 +103,13 @@ class AppRouterDelegate extends RouterDelegate<AppRouteSettings>
           ),
         ),
       );
+
+  void pushReplacementNamed(String name, {dynamic arguments}) {
+    final configuration = AppRouteSettings(name: name, arguments: arguments);
+    if (_histories.isEmpty)
+      _histories.add(configuration);
+    else
+      _histories.last = configuration;
+    updatePath(configuration);
+  }
 }
