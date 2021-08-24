@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_nested_route/controls/main.dart';
 import 'package:flutter_nested_route/navigations/route_control.dart';
 
-typedef AppRouteSettingsPredicate = bool Function(AppRouteSettings route);
-
 class AppInformationParser extends RouteInformationParser<AppRouteSettings> {
   AppInformationParser();
   @override
@@ -11,7 +9,6 @@ class AppInformationParser extends RouteInformationParser<AppRouteSettings> {
       RouteInformation routeInformation) async {
     final configuration =
         AppRouteSettings(name: routeInformation.location ?? "");
-
     return configuration;
   }
 
@@ -21,6 +18,7 @@ class AppInformationParser extends RouteInformationParser<AppRouteSettings> {
   }
 }
 
+// Router Delegate
 class AppRouterDelegate extends RouterDelegate<AppRouteSettings>
     with PopNavigatorRouterDelegateMixin, ChangeNotifier {
   final GlobalKey<NavigatorState> _navigatorKey;
@@ -48,24 +46,16 @@ class AppRouterDelegate extends RouterDelegate<AppRouteSettings>
     this._currentConfiguration = configuration;
   }
 
-  bool routeAccessable(String name, bool hasAccess) {
-    return (_controls.where((element) =>
-        element.access.containsKey(name) &&
-        element.access[name] == hasAccess)).isNotEmpty;
-  }
-
   AppRouterDelegate() : _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     final pages = getPages();
-
     return Navigator(
       key: navigatorKey,
       pages: pages,
       onPopPage: (route, result) {
         if (route.didPop(result)) {
-          popHistories();
           return true;
         }
         return false;
@@ -107,60 +97,4 @@ class AppRouterDelegate extends RouterDelegate<AppRouteSettings>
           child: Text(
         "404 -  not found",
       ));
-
-  popHistories() {
-    _histories.removeLast();
-    if (_histories.isNotEmpty) updatePath(_histories.last);
-  }
-
-  void pushNamed(String name, {dynamic arguments}) {
-    final configuration = AppRouteSettings(name: name, arguments: arguments);
-    _histories.add(configuration);
-
-    updatePath(configuration);
-  }
-
-  void pushReplacementNamed(String name, {dynamic arguments}) {
-    final configuration = AppRouteSettings(name: name, arguments: arguments);
-    if (_histories.isEmpty)
-      _histories.add(configuration);
-    else
-      _histories.last = configuration;
-    updatePath(configuration);
-  }
-
-  void pushNamedAndRemoveUntil(String name, AppRouteSettingsPredicate predicate,
-      {dynamic arguments}) {
-    for (var i = _histories.length - 1; i >= 0; i--) {
-      final configuration = _histories[i];
-      if (predicate(configuration)) {
-        break;
-      }
-      histories.remove(configuration);
-    }
-
-    final configuration = AppRouteSettings(name: name, arguments: arguments);
-    _histories.add(configuration);
-    updatePath(configuration);
-  }
-
-  void popUntil(AppRouteSettingsPredicate predicate) {
-    for (var i = _histories.length - 1; i >= 0; i--) {
-      final configuration = _histories[i];
-      if (predicate(configuration)) {
-        break;
-      }
-
-      navigatorKey.currentState?.pop();
-    }
-  }
-
-  void pop() {
-    _histories.removeLast();
-    if (_histories.isNotEmpty) updatePath(_histories.last);
-  }
-
-  bool canPop() {
-    return navigatorKey.currentState?.canPop() == true;
-  }
 }
