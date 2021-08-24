@@ -4,10 +4,10 @@ class MainScreen extends StatefulWidget {
   MainScreen({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _HomePageState extends State<MainScreen> {
+class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
