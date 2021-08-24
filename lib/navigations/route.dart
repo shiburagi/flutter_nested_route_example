@@ -94,7 +94,13 @@ class AppRouterDelegate extends RouterDelegate<AppRouteSettings>
   }
 
   Page notFound() => MaterialPage(
-          child: Text(
-        "404 -  not found",
-      ));
+        child: Material(
+          child: Center(
+            child: Text(
+              "404 -  not found",
+              style: TextStyle(fontSize: 40),
+            ),
+          ),
+        ),
+      );
 }

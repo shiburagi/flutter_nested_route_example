@@ -9,6 +9,6 @@ class MainRouteControl extends RouteControl {
 
   @override
   Page? createPage(AppRouteSettings configuration) {
-    return MaterialPage(child: MainScreen());
+    if (configuration.name == "/") return MaterialPage(child: MainScreen());
   }
 }
