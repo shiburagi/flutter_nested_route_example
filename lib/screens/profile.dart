@@ -4,10 +4,10 @@ class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _HomePageState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

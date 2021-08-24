@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nested_route/navigations/route_control.dart';
 import 'package:flutter_nested_route/screens/home.dart';
-import 'package:flutter_nested_route/screens/main.dart';
 import 'package:flutter_nested_route/screens/profile.dart';
 import 'package:flutter_nested_route/screens/settings.dart';
 import 'package:flutter_nested_route/utils/route_path.dart';

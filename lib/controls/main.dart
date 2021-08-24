@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nested_route/navigations/route_control.dart';
 import 'package:flutter_nested_route/screens/main.dart';
+import 'package:flutter_nested_route/utils/route_path.dart';
 
 class MainRouteControl extends RouteControl {
   @override
@@ -9,6 +10,7 @@ class MainRouteControl extends RouteControl {
 
   @override
   Page? createPage(AppRouteSettings configuration) {
-    return MaterialPage(child: MainScreen());
+    if ([RoutePath.home, RoutePath.profile, RoutePath.settings]
+        .contains(configuration.name)) return MaterialPage(child: MainScreen());
   }
 }
